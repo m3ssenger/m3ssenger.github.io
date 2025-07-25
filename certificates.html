@@ -145,11 +145,22 @@
       transition: transform var(--transition), box-shadow var(--transition);
       box-shadow: 0 2px 12px 0 rgba(106,13,173,0.08);
       display: flex;
-      flex-direction: column;
-      gap: 0.7rem;
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      gap: 2rem;
     }
     .cert-card.hide {
       display: none !important;
+    }
+    .cert-card .cert-desc {
+      flex: 1 1 0;
+    }
+    .cert-card .cert-img {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .cert-card .cert-title {
       color: var(--purple-light);
@@ -209,6 +220,50 @@
       font-size: 0.8rem;
       color: #777;
     }
+    .cert-section {
+      margin-bottom: 2rem;
+      border-radius: 8px;
+      background: var(--purple-dark);
+      box-shadow: 0 2px 8px 0 rgba(106,13,173,0.05);
+      overflow: hidden;
+    }
+    .section-toggle {
+      width: 100%;
+      background: none;
+      border: none;
+      color: var(--purple-light);
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-align: left;
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: background var(--transition);
+    }
+    .section-toggle:hover {
+      background: rgba(155, 89, 182, 0.08);
+    }
+    .arrow {
+      display: inline-block;
+      margin-right: 0.75rem;
+      transition: transform var(--transition);
+    }
+    .section-toggle.expanded .arrow {
+      transform: rotate(90deg);
+    }
+    .section-content {
+      padding: 1.2rem 2rem 1.5rem 2.5rem;
+      background: rgba(155, 89, 182, 0.04);
+      border-top: 1px solid var(--purple);
+      animation: fadeIn 0.5s;
+    }
+    .empty-message {
+      color: #bbb;
+      font-style: italic;
+      font-size: 1rem;
+      padding: 0.5rem 0;
+    }
   </style>
 </head>
 <body>
@@ -228,17 +283,58 @@
     <div class="filter-bar">
       <span class="filter-label">Filter by Provider:</span>
       <select class="filter-select" id="providerFilter">
-        <option value="all">All</option>
-        <option value="HTB">Hack The Box</option>
+        <option value="HTB" selected>Hack The Box</option>
         <option value="TryHackMe">TryHackMe</option>
         <option value="OffSec">Offensive Security</option>
         <option value="INE">INE</option>
         <option value="Other">Other</option>
       </select>
     </div>
-    <section id="cert-list">
-      <!-- Certificate cards will be injected here by JS -->
-    </section>
+    <div id="cert-sections-wrapper">
+      <section class="cert-section" data-provider="HTB" style="display: block;">
+        <div class="section-inner">
+          <button class="section-toggle" data-section="prolabs">
+            <span class="arrow">&#9654;</span> Pro Labs
+          </button>
+          <div class="section-content" id="section-prolabs" style="display: none;">
+            <div class="cert-card">
+              <div class="cert-desc">
+                <div class="cert-title">Hades</div>
+                <div class="cert-platform">Awarded to: m3ssenger</div>
+                <div class="cert-date">Date: 25 Jul 2025</div>
+                <div class="cert-id">Cert Code: HTBCERT-E24DEB2A90</div>
+              </div>
+              <div class="cert-img">
+                <img src="assets/pro-labs/Hades-1.png" alt="Hades Certificate" style="width:93.75%;min-width:240px;max-width:440px;border-radius:6px;" />
+              </div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-desc">
+                <div class="cert-title">P.O.O</div>
+                <div class="cert-platform">Awarded to: m3ssenger</div>
+                <div class="cert-date">Date: 25 Jul 2025</div>
+                <div class="cert-id">Cert Code: HTBCERT-909F3682DB</div>
+              </div>
+              <div class="cert-img">
+                <img src="assets/pro-labs/P.O.O-1.png" alt="P.O.O Certificate" style="width:93.75%;min-width:240px;max-width:440px;border-radius:6px;" />
+              </div>
+            </div>
+            <div class="cert-card">
+              <div class="cert-desc">
+                <div class="cert-title">XEN</div>
+                <div class="cert-platform">Awarded to: m3ssenger</div>
+                <div class="cert-date">Date: 25 Jul 2025</div>
+                <div class="cert-id">Cert Code: HTBCERT-460C20F448</div>
+              </div>
+              <div class="cert-img">
+                <img src="assets/pro-labs/Xen-1.png" alt="XEN Certificate" style="width:93.75%;min-width:240px;max-width:440px;border-radius:6px;" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- Add more cert-section blocks for other providers/subcategories as needed -->
+    </div>
   </main>
   <footer>
     &copy; 2025 m3ssenger &bull; Crafted with 💜 and CSS
@@ -246,55 +342,7 @@
   <script>
     // Placeholder certificate data
     const certificates = [
-      {
-        title: 'HTB Certified Penetration Testing Specialist',
-        platform: 'HTB',
-        date: '2024-03-15',
-        id: 'HTB-123456',
-        link: '#',
-      },
-      {
-        title: 'TryHackMe Complete Beginner Path',
-        platform: 'TryHackMe',
-        date: '2023-11-02',
-        id: 'THM-654321',
-        link: '#',
-      },
-      {
-        title: 'Offensive Security Certified Professional (OSCP)',
-        platform: 'OffSec',
-        date: '2022-08-10',
-        id: 'OS-789012',
-        link: '#',
-      },
-      {
-        title: 'INE eJPT',
-        platform: 'INE',
-        date: '2023-05-20',
-        id: 'INE-345678',
-        link: '#',
-      },
-      {
-        title: 'HTB Certified Bug Bounty Hunter',
-        platform: 'HTB',
-        date: '2024-01-12',
-        id: 'HTB-987654',
-        link: '#',
-      },
-      {
-        title: 'TryHackMe Advent of Cyber',
-        platform: 'TryHackMe',
-        date: '2023-12-25',
-        id: 'THM-112233',
-        link: '#',
-      },
-      {
-        title: 'Custom CTF Winner',
-        platform: 'Other',
-        date: '2023-09-01',
-        id: 'CTF-001',
-        link: '#',
-      },
+      // Real certificates will be added here
     ];
 
     function renderCertificates(filter) {
@@ -318,12 +366,62 @@
       });
     }
 
-    document.getElementById('providerFilter').addEventListener('change', function() {
-      renderCertificates(this.value);
-    });
+    // Hide/show certificate subsections based on selected provider
+    function updateVisibleSections(provider) {
+      const wrapper = document.getElementById('cert-sections-wrapper');
+      if (!wrapper) return;
+      Array.from(wrapper.querySelectorAll('section.cert-section')).forEach(section => {
+        const sectionProvider = section.getAttribute('data-provider');
+        // Only show Pro Labs section if HTB is selected
+        if (sectionProvider === 'HTB') {
+          section.style.display = (provider === 'HTB') ? 'block' : 'none';
+          // When hiding, also collapse the section and hide its content
+          if (provider !== 'HTB') {
+            const btn = section.querySelector('.section-toggle');
+            if (btn) btn.classList.remove('expanded');
+            const sectionId = btn ? btn.getAttribute('data-section') : null;
+            const content = sectionId ? document.getElementById('section-' + sectionId) : null;
+            if (content) content.style.display = 'none';
+          }
+        } else {
+          // For other sections, show/hide based on provider match
+          section.style.display = (sectionProvider === provider) ? 'block' : 'none';
+        }
+      });
+    }
 
-    // Initial render
-    renderCertificates('all');
+    function attachToggleListeners() {
+      document.querySelectorAll('section.cert-section').forEach(section => {
+        if (section.style.display !== 'none') {
+          section.querySelectorAll('.section-toggle').forEach(btn => {
+            btn.onclick = function() {
+              const sectionId = btn.getAttribute('data-section');
+              const content = document.getElementById('section-' + sectionId);
+              const expanded = btn.classList.toggle('expanded');
+              if (expanded) {
+                content.style.display = 'block';
+              } else {
+                content.style.display = 'none';
+              }
+            };
+          });
+        }
+      });
+    }
+    attachToggleListeners();
+
+    document.getElementById('providerFilter').addEventListener('change', function() {
+      // renderCertificates(this.value); // Removed as cert-list does not exist and is not needed
+      updateVisibleSections(this.value);
+      // Collapse all section toggles and hide their content when switching provider
+      document.querySelectorAll('.section-toggle').forEach(btn => {
+        btn.classList.remove('expanded');
+        const section = btn.getAttribute('data-section');
+        const content = document.getElementById('section-' + section);
+        if (content) content.style.display = 'none';
+      });
+      attachToggleListeners();
+    });
   </script>
 </body>
 </html> 
