@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificates | m3ssenger</title>
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple-dark: #2c003e;
+      --purple: #6a0dad;
+      --purple-light: #9b59b6;
+      --text-light: #f5f5f5;
+      --bg: #111;
+      --transition: 0.3s ease-in-out;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Roboto Mono', monospace;
+      background-color: var(--bg);
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: var(--purple-dark);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      animation: slideDown 0.6s ease-out;
+    }
+    .logo {
+      height: 50px;
+      width: 50px;
+      object-fit: contain;
+      animation: rotateIn 0.8s ease-out;
+    }
+    .username {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-left: 0.75rem;
+      color: var(--purple-light);
+      letter-spacing: 1px;
+    }
+    .tagline {
+      font-size: 1rem;
+      font-style: italic;
+      color: #e0d7f7;
+      margin-left: 1rem;
+      opacity: 0.8;
+      font-weight: 400;
+      vertical-align: middle;
+    }
+    .branding {
+      display: flex;
+      align-items: center;
+    }
+    nav a {
+      color: var(--text-light);
+      margin-left: 1.5rem;
+      position: relative;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color var(--transition);
+    }
+    nav a:hover {
+      color: var(--purple-light);
+    }
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: var(--purple);
+      transition: width var(--transition);
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+    main {
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    h1.section-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      border-bottom: 2px solid var(--purple);
+      display: inline-block;
+      animation: fadeIn 1s ease-out;
+    }
+    .filter-bar {
+      margin: 2rem 0 1.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      animation: fadeIn 1.2s ease-out;
+    }
+    .filter-label {
+      font-weight: 600;
+      color: var(--purple-light);
+      font-size: 1rem;
+    }
+    .filter-select {
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      border: 1px solid var(--purple);
+      background: var(--purple-dark);
+      color: var(--text-light);
+      font-size: 1rem;
+      transition: border var(--transition), box-shadow var(--transition);
+      outline: none;
+    }
+    .filter-select:focus {
+      border: 1.5px solid var(--purple-light);
+      box-shadow: 0 0 0 2px var(--purple-light);
+    }
+    #cert-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .cert-card {
+      background: var(--purple-dark);
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 1.5rem 1.2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s forwards;
+      transition: transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 2px 12px 0 rgba(106,13,173,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .cert-card.hide {
+      display: none !important;
+    }
+    .cert-card .cert-title {
+      color: var(--purple-light);
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    .cert-card .cert-platform {
+      font-size: 0.95rem;
+      color: var(--purple);
+      font-weight: 600;
+    }
+    .cert-card .cert-date {
+      font-size: 0.85rem;
+      color: #ccc;
+    }
+    .cert-card .cert-id {
+      font-size: 0.8rem;
+      color: #aaa;
+    }
+    .cert-card .cert-link {
+      margin-top: 0.5rem;
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 600;
+      color: var(--purple);
+      border: 1px solid var(--purple);
+      padding: 0.3rem 0.7rem;
+      border-radius: 5px;
+      transition: background var(--transition), color var(--transition);
+      font-size: 0.95rem;
+    }
+    .cert-card .cert-link:hover {
+      background: var(--purple);
+      color: var(--text-light);
+    }
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-100%); }
+      to   { transform: translateY(0); }
+    }
+    @keyframes rotateIn {
+      from { transform: rotate(-360deg); opacity: 0; }
+      to   { transform: rotate(0); opacity: 1; }
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      margin-top: 3rem;
+      font-size: 0.8rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="branding" style="display: flex; align-items: center;">
+      <a href="index.html" class="username">m3ssenger</a>
+      <span class="tagline">somewhat of an infosec enthusiast</span>
+    </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="https://github.com/m3ssenger" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://twitter.com/YourUsername" target="_blank" rel="noopener">Twitter</a>
+    </nav>
+  </header>
+  <main>
+    <h1 class="section-title">Certificates</h1>
+    <div class="filter-bar">
+      <span class="filter-label">Filter by Provider:</span>
+      <select class="filter-select" id="providerFilter">
+        <option value="all">All</option>
+        <option value="HTB">Hack The Box</option>
+        <option value="TryHackMe">TryHackMe</option>
+        <option value="OffSec">Offensive Security</option>
+        <option value="INE">INE</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <section id="cert-list">
+      <!-- Certificate cards will be injected here by JS -->
+    </section>
+  </main>
+  <footer>
+    &copy; 2025 m3ssenger &bull; Crafted with 💜 and CSS
+  </footer>
+  <script>
+    // Placeholder certificate data
+    const certificates = [
+      {
+        title: 'HTB Certified Penetration Testing Specialist',
+        platform: 'HTB',
+        date: '2024-03-15',
+        id: 'HTB-123456',
+        link: '#',
+      },
+      {
+        title: 'TryHackMe Complete Beginner Path',
+        platform: 'TryHackMe',
+        date: '2023-11-02',
+        id: 'THM-654321',
+        link: '#',
+      },
+      {
+        title: 'Offensive Security Certified Professional (OSCP)',
+        platform: 'OffSec',
+        date: '2022-08-10',
+        id: 'OS-789012',
+        link: '#',
+      },
+      {
+        title: 'INE eJPT',
+        platform: 'INE',
+        date: '2023-05-20',
+        id: 'INE-345678',
+        link: '#',
+      },
+      {
+        title: 'HTB Certified Bug Bounty Hunter',
+        platform: 'HTB',
+        date: '2024-01-12',
+        id: 'HTB-987654',
+        link: '#',
+      },
+      {
+        title: 'TryHackMe Advent of Cyber',
+        platform: 'TryHackMe',
+        date: '2023-12-25',
+        id: 'THM-112233',
+        link: '#',
+      },
+      {
+        title: 'Custom CTF Winner',
+        platform: 'Other',
+        date: '2023-09-01',
+        id: 'CTF-001',
+        link: '#',
+      },
+    ];
+
+    function renderCertificates(filter) {
+      const list = document.getElementById('cert-list');
+      list.innerHTML = '';
+      let delay = 0.1;
+      certificates.forEach(cert => {
+        const show = filter === 'all' || cert.platform === filter;
+        const card = document.createElement('div');
+        card.className = 'cert-card' + (show ? '' : ' hide');
+        card.style.animationDelay = show ? `${delay}s` : '0s';
+        card.innerHTML = `
+          <div class="cert-title">${cert.title}</div>
+          <div class="cert-platform">${cert.platform}</div>
+          <div class="cert-date">Date: ${cert.date}</div>
+          <div class="cert-id">ID: ${cert.id}</div>
+          <a class="cert-link" href="${cert.link}" target="_blank">View Certificate</a>
+        `;
+        list.appendChild(card);
+        if (show) delay += 0.1;
+      });
+    }
+
+    document.getElementById('providerFilter').addEventListener('change', function() {
+      renderCertificates(this.value);
+    });
+
+    // Initial render
+    renderCertificates('all');
+  </script>
+</body>
+</html> 

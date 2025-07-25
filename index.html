@@ -53,6 +53,15 @@
       color: var(--purple-light);
       letter-spacing: 1px;
     }
+    .tagline {
+      font-size: 1rem;
+      font-style: italic;
+      color: #e0d7f7;
+      margin-left: 1rem;
+      opacity: 0.8;
+      font-weight: 400;
+      vertical-align: middle;
+    }
     nav a {
       color: var(--text-light);
       margin-left: 1.5rem;
@@ -161,45 +170,24 @@
       font-size: 0.8rem;
       color: #777;
     }
+    .branding {
+      display: flex;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
   <header>
-    <div class="branding">
-      <img src="assets/logo.png" alt="Logo" class="logo">
-      <span class="username">YourUsername</span>
+    <div class="branding" style="display: flex; align-items: center;">
+      <a href="index.html" class="username">m3ssenger</a>
+      <span class="tagline">somewhat of an infosec enthusiast</span>
     </div>
     <nav>
-      <a href="https://github.com/YourUsername" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/m3ssenger" target="_blank" rel="noopener">GitHub</a>
       <a href="https://twitter.com/YourUsername" target="_blank" rel="noopener">Twitter</a>
-      <a href="https://linkedin.com/in/YourUsername" target="_blank" rel="noopener">LinkedIn</a>
     </nav>
   </header>
   <main>
-    <h1 class="section-title">Writeups</h1>
-    <section id="content">
-      <!-- Example Cards -->
-      <div class="card">
-        <h3>Challenge: Blue</h3>
-        <p>Enumeration and exploitation of the "Blue" machine, covering SMB, RDP, and privilege escalation.</p>
-        <a href="writeups/blue.html">Read More</a>
-      </div>
-      <div class="card">
-        <h3>Challenge: Forest</h3>
-        <p>Active Directory exploitation on "Forest", including Kerberoasting and ADCS abuses.</p>
-        <a href="writeups/forest.html">Read More</a>
-      </div>
-      <div class="card">
-        <h3>Challenge: Reptile</h3>
-        <p>Web exploitation and C2 pivoting in the modern Linux-based "Reptile" challenge.</p>
-        <a href="writeups/reptile.html">Read More</a>
-      </div>
-      <div class="card">
-        <h3>Challenge: Helpline</h3>
-        <p>Database and code injection techniques to compromise the "Helpline" application.</p>
-        <a href="writeups/helpline.html">Read More</a>
-      </div>
-    </section>
   </main>
   <footer>
     &copy; 2025 YourUsername &bull; Crafted with 💜 and CSS
